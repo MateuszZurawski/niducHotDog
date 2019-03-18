@@ -1,12 +1,11 @@
 # Symulator systemu wind
 
-
 ## Model
 
 * Ilość wind pracujących w galerii handlowej i koszt ich zainstalowania
 * Koszt i czas naprawy windy
 * Miesięczny koszt utrzymania normalnie działającej windy
-* Ilość zatrudnionych serwisantów
+* Koszt serwisowania
 * Częstotliwość i koszt dokonywania przeglądów technicznych
 
 
