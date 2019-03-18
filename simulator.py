@@ -4,23 +4,21 @@ import random
 
 oneElevatorDown=0
 twoElevatorsDown=0
-randomVariable = 0
+down = 0
+elevators= [0]*parameters.HOW_MANY_ELEVATORS
 #more elevators down lel 
 
 for i in range (parameters.LIFETIME_OF_ELEVATOR):
     for j in range (parameters.HOW_MANY_ELEVATORS):
         radom=random.uniform(0,1)
         if radom<=parameters.PROBABILITY_OF_FAILURE:
-            randomVariable+=1
-    if randomVariable==1:
-            oneElevatorDown+=1
-    if randomVariable==2:
-            twoElevatorsDown+=1     
-    randomVariable=0
+            down+=1
+    elevators[down]+=1
+
+    down=0
 
 
-print(oneElevatorDown,'          ',twoElevatorsDown)
-
+print(elevators)
 
 
 
