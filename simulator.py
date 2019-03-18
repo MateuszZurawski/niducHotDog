@@ -5,7 +5,7 @@ import random
 oneElevatorDown=0
 twoElevatorsDown=0
 down = 0
-elevators= [0]*parameters.HOW_MANY_ELEVATORS
+elevators= [0]*parameters.HOW_MANY_ELEVATORS []
 #more elevators down lel 
 
 for i in range (parameters.LIFETIME_OF_ELEVATOR):
