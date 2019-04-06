@@ -1,11 +1,53 @@
 import parameters
 import random
 
+from numpy.random import normal, weibull
+import numpy as np
 
-oneElevatorDown=0
-twoElevatorsDown=0
-down = 0
-elevators= [0]*parameters.HOW_MANY_ELEVATORS []
+import math
+import matplotlib.pyplot as plt
+
+
+
+averages = []
+
+for i in range(100, 200):
+    samples = [weibull(i/100) for j in range(1000)]
+    averages.append( sum(samples) / len(samples) )
+
+plt.plot( averages )
+plt.show()
+
+class Malfunction:
+    def __init__(self):
+        self.repair_time =  math.ceil( math.abs( normal(
+            parameters.AVERAGE_REPAIR_TIME,
+            parameters.REPAIR_TIME_VARIANCE
+        ) ) )
+
+        self.is_fixed = False
+
+    def one_day_repair(self):
+        self.repair_time -= 1
+        if self.repair_time == 0:
+            self.is_fixed = True
+    
+
+class Elevator:
+    def __init__(self):
+        self.uptime_without_failure_days = 0
+        self.malfunction = None
+
+    def random_failure(self):
+        pass
+
+
+exit(0)
+
+
+
+#elevators= [0]*parameters.HOW_MANY_ELEVATORS []
+
 #more elevators down lel 
 
 for i in range (parameters.LIFETIME_OF_ELEVATOR):
