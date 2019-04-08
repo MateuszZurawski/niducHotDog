@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np # != p
-
-COLORS = [ '#FF5370', '#F78C6C', '#FFCB6B', '#C3E88D', '#C792EA', '#C17E70', '#F07178', '#BB80B3']
+from parameters import COLORS
 
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
 labels = 'Installation cost', 'Service cost', 'Parts cost'

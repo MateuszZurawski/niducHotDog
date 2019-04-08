@@ -1,59 +1,33 @@
 import parameters
 import random
-
 from numpy.random import normal, weibull
+
 import numpy as np
 
 import math
 import matplotlib.pyplot as plt
 
-class Malfunction:
-    def __init__(self):
-        self.repair_time =  math.ceil( abs( normal(
-            parameters.AVERAGE_REPAIR_TIME,
-            parameters.REPAIR_TIME_VARIANCE
-        ) ) )
+from elevator import Elevator
+
+def plot_elevators(elevators):
+
+    y = 0
+    plt.figure(num=None, figsize=[15, 5])
+
+    for e in elevators:
+        y+=1
+        for data in e.journal:
+            plt.fill_between(data, y1=y-0.2, y2=y+0.2, color=parameters.COLORS[y])
+
+    plt.axes().get_yaxis().set_visible(False)
+    plt.show()
 
 
-        self.is_fixed = False
-
-    def one_day_repair(self):
-        self.repair_time -= 1
-        if self.repair_time <= 0:
-            self.is_fixed = True
-    
-
-class Elevator:
-    def __init__(self):
-        self.uptime_without_failure_days = 0
-        self.downtime = 0
-        self.malfunction = None
-        self.failures = 0
-
-
-    def random_failure(self): # TODO: maths, not random guesses
-        if weibull(self.uptime_without_failure_days / 50 + 1) < 0.01:
-            self.failures += 1
-            self.malfunction = Malfunction()
-
-    @property
-    def is_working(self):
-        return self.malfunction is None
-
-    def simulate_1_day(self):
-        if self.is_working == False:
-            self.downtime += 1
-            self.malfunction.one_day_repair()
-            if self.malfunction.is_fixed:
-                self.malfunction = None
-        else:
-            self.random_failure()
-
-elevators = [Elevator(), Elevator()]
+elevators = [Elevator() for i in range(parameters.HOW_MANY_ELEVATORS)]
 
 global_downtime = 0
 
-for i in range (parameters.LIFETIME_OF_ELEVATOR*3):
+for i in range (parameters.LIFETIME_OF_ELEVATOR):
     
     not_working = 0
     for e in elevators:
@@ -68,6 +42,10 @@ for i in range (parameters.LIFETIME_OF_ELEVATOR*3):
     #    global_downtime += 1
 
 
-print(f'{global_downtime} downtime')
+for e in elevators:
+    e.finalize_simulation()
 
+
+print(f'{global_downtime} downtime')
+plot_elevators(elevators)
 
