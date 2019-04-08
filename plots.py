@@ -1,10 +1,54 @@
 import matplotlib.pyplot as plt
 import numpy as np # != p
 from parameters import COLORS
+import parameters
 
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
 labels = 'Installation cost', 'Service cost', 'Parts cost'
 sizes = [30000, 1590, 3216]
+
+
+def plot_elevators(elevators, global_downtime):
+    '''
+    global_downtime: [1,1,1,0,0,0,1,1]
+    '''
+
+    global_downtime_journal = []
+    _start = 0
+    _end = 0
+
+    for i in range(len(global_downtime)-1):
+        if global_downtime[i] != global_downtime[i+1]:
+            if global_downtime[i+1] == 1:
+                _end = i+2
+                global_downtime_journal.append([_start, _end])
+            else:
+                _start = i+2
+
+    if _start > _end:
+        global_downtime_journal.append([_start, parameters.LIFETIME_OF_ELEVATOR])
+
+    
+    y = 0
+    plt.figure(num=None, figsize=[15, 5])
+
+    for e in elevators:
+        y+=1
+        for data in e.journal:
+            plt.fill_between(data, y1=y-0.2, y2=y+0.2, color=parameters.COLORS[y])
+
+
+    y+=1
+
+    plt.fill_between([0, parameters.LIFETIME_OF_ELEVATOR], y1=y-0.2, y2=y+0.2, color='white')
+
+    for data in global_downtime_journal:
+        plt.fill_between(data, y1=y-0.2, y2=y+0.2, color='red')
+
+    plt.axes().get_yaxis().set_visible(False)
+    plt.show()
+
+
 
 
 def save_or_show(plt, save_to):

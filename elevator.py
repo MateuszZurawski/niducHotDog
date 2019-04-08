@@ -1,6 +1,7 @@
 from numpy.random import normal, weibull
 from malfunction import Malfunction
 import math
+import parameters
 
 class Elevator:
     def __init__(self):
@@ -10,11 +11,11 @@ class Elevator:
         self.failures = 0
 
         self.current_day = 0
-        self.journal = [ [0] ]
+        self.journal = [ [0] ]# [[0, 19], [21, 100], [103, 205]]
 
 
     def random_failure(self): # TODO: maths, not random guesses
-        if weibull(self.uptime_without_failure_days / 50 + 1) < 0.01:
+        if weibull(self.uptime_without_failure_days / 50 + 1) < parameters.PROBABILITY_OF_FAILURE:
             self.failures += 1
             self.malfunction = Malfunction()
             self.journal[-1].append(self.current_day)

@@ -8,24 +8,13 @@ import math
 import matplotlib.pyplot as plt
 
 from elevator import Elevator
+import parameters
 
-def plot_elevators(elevators):
-
-    y = 0
-    plt.figure(num=None, figsize=[15, 5])
-
-    for e in elevators:
-        y+=1
-        for data in e.journal:
-            plt.fill_between(data, y1=y-0.2, y2=y+0.2, color=parameters.COLORS[y])
-
-    plt.axes().get_yaxis().set_visible(False)
-    plt.show()
-
+import plots
 
 elevators = [Elevator() for i in range(parameters.HOW_MANY_ELEVATORS)]
 
-global_downtime = 0
+global_downtime = []
 
 for i in range (parameters.LIFETIME_OF_ELEVATOR):
     
@@ -35,11 +24,10 @@ for i in range (parameters.LIFETIME_OF_ELEVATOR):
         if not e.is_working:
             not_working +=1
 
-    if not_working == len(elevators):
-        global_downtime+=1
-
-    #if sum([int(elevator.is_working) for elevator in elevators] ) == len(elevators):
-    #    global_downtime += 1
+    if not_working != len(elevators):
+        global_downtime.append(1)
+    else:
+        global_downtime.append(0)
 
 
 for e in elevators:
@@ -47,5 +35,5 @@ for e in elevators:
 
 
 print(f'{global_downtime} downtime')
-plot_elevators(elevators)
+plots.plot_elevators(elevators, global_downtime)
 
