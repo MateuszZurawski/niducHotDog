@@ -20,12 +20,11 @@ for line in file_handle:
 x = np.array(x)
 y = np.array(y)
 
-z = np.polyfit(x, y, 3)
-p = np.poly1d(z)
-p30 = np.poly1d(np.polyfit(x, y, 30))
 
-xp = np.linspace(-100, 100, 100)
-_ = plt.plot(x, y, '.', xp, p(xp), '-', xp, p30(xp), '--')
-plt.ylim(-2,2)
+polynomial = np.poly1d(np.polyfit(x, y, 5))
+
+xp = np.linspace(-1, 10, 1000)
+_ = plt.plot(x, y, '.',xp, polynomial(xp), '--')
+plt.ylim(90,110)
 
 plt.show()
