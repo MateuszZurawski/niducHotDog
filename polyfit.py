@@ -2,10 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-filename = "results/AVERAGE_REPAIR_TIME.csv"
+#filename = "results/PROBABILITY_OF_FAILURE.csv"
+filename = "results/REPAIR_TIME_VARIANCE.csv"
 
 file_handle = open(filename)
 
+'''
 x = []
 y = []
 
@@ -19,12 +21,18 @@ for line in file_handle:
 
 x = np.array(x)
 y = np.array(y)
+'''
+data = np.loadtxt(open(filename, "rb"), delimiter=",")
+x = data[:,0]
+y = data[:,1]
 
+#exit()
+print(x)
 
 polynomial = np.poly1d(np.polyfit(x, y, 5))
 
-xp = np.linspace(-1, 10, 1000)
+xp = np.linspace(min(x), max(x), 100)
 _ = plt.plot(x, y, '.',xp, polynomial(xp), '--')
-plt.ylim(90,110)
+plt.ylim(min(y)-1, max(y)+1)
 
 plt.show()
