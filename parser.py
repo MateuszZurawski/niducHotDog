@@ -23,7 +23,7 @@ from_value = args.range[0]
 to_value = args.range[1]
 step = args.range[2]
 
-filename = parameter_to_change + '.csv'
+filename = 'results/' + parameter_to_change + '.csv'
 output_file = open(filename, 'w')
 
 print('# Simulating...')

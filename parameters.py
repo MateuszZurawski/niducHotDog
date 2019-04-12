@@ -6,9 +6,9 @@ LIFETIME_OF_ELEVATOR = 365*10
 # TODO: find params for 90% avialability rate
 
 # In days
-AVERAGE_REPAIR_TIME = 10
-REPAIR_TIME_VARIANCE = 0.5 # 0.1 default
-PROBABILITY_OF_FAILURE = 0.08 # 0.01 for real-world failure rate
+AVERAGE_REPAIR_TIME = 5
+REPAIR_TIME_VARIANCE = 0.1 # 0.1 default
+PROBABILITY_OF_FAILURE = 0.01 # 0.01 for real-world failure rate
 
 
 '''
