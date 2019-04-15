@@ -47,3 +47,9 @@ class Simulator:
         return sum(uptimes)/len(uptimes)
     #plots.plot_elevators(elevators, global_downtime)
 
+
+if __name__ == '__main__':
+    s = Simulator()
+    uptime =  s.run()
+    print(f'Uptime: {uptime}')
+    

@@ -1,10 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import argparse
+
+parser = argparse.ArgumentParser(description='wykresy lel')
+
+parser.add_argument('--file', type=str, required=True)
 
 
-#filename = "results/PROBABILITY_OF_FAILURE.csv"
-filename = "results/REPAIR_TIME_VARIANCE.csv"
-
+filename = parser.parse_args().file
 file_handle = open(filename)
 
 '''
