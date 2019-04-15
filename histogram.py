@@ -39,15 +39,12 @@ def load_uptimes(file):
 def generate_histogram(uptimes):
     #histogram = plt.hist(uptimes, 100)
 
-    hist, bin_edges = np.histogram(uptimes, density=False, bins=100)
+    hist, bin_edges = np.histogram(uptimes, density=True, bins=100)
     bin_centres = (bin_edges[:-1] + bin_edges[1:])/2
 
 
-    #print(bin_centres)
-    # p0 is the initial guess for the fitting coefficients (A, mu and sigma above)
-
-    
-    p0 = [400., 91., 5.]
+    # Mediana w średniej niezawodności
+    p0 = [1., 90., 1.]
     #coeff = p0
 
     coeff, var_matrix = curve_fit(gauss, bin_centres, hist, p0=p0)
