@@ -42,9 +42,14 @@ class Simulator:
         return uptime
 
     def average_uptime(self, number_of_runs):
-        uptimes = [self.run() for _ in range(number_of_runs)]
+        uptimes = self.uptimes_for_histogram(number_of_runs)
 
         return sum(uptimes)/len(uptimes)
+
+    def uptimes_for_histogram(self, number_of_runs):
+        uptimes = [self.run() for _ in range(number_of_runs)]
+
+        return uptimes
     #plots.plot_elevators(elevators, global_downtime)
 
 
