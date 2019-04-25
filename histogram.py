@@ -39,7 +39,7 @@ def load_uptimes(file):
 def generate_histogram(uptimes):
     #histogram = plt.hist(uptimes, 100)
 
-    hist, bin_edges = np.histogram(uptimes, density=True, bins=100)
+    hist, bin_edges = np.histogram(uptimes, density=False, bins=100)
     bin_centres = (bin_edges[:-1] + bin_edges[1:])/2
 
 
@@ -52,17 +52,35 @@ def generate_histogram(uptimes):
     # Get the fitted curve
     hist_fit = gauss(bin_centres, *coeff)
     
-    plt.legend(loc='best')
-    plt.plot(bin_centres, hist_fit, label='Fitted data', color='red')
+
+    fig = plt.figure()
+    fig.suptitle('Histogram', fontsize=14, fontweight='bold')
+
+    ax = fig.add_subplot(111)
+    fig.subplots_adjust(top=0.85)
+    #plt.legend(loc='best')
+    ax.plot(bin_centres, hist_fit, label='Fitted data', color='red')
     
-    plt.bar(bin_centres, hist, label='Fitted data')
-    print([gauss(x, *coeff) for x in range(80,90)])
+    ax.bar(bin_centres, hist, label='Fitted data')
     
     #plt.hist(uptimes, )
     
     # Finally, lets get the fitting parameters, i.e. the mean and standard deviation:
     print ('Fitted mean = ', coeff[1])
     print ('Fitted standard deviation = ', coeff[2])
+
+
+    ax.text(0.95, 0.95, f'Standard Deviation: {coeff[2]:.3f}\nMean: {coeff[1]:.3f}',
+            verticalalignment='top', horizontalalignment='right',
+            transform=ax.transAxes,
+            color='black', fontsize=10,
+            bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
+    #ax.xlabel('% niezawodności')
+
+    #ax.text(0.1, 0.1, 'boxed italics text in data coords', style='italic',
+            #bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
+
+
 
 
     plt.show()
