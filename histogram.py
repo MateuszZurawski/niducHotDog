@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import simulator
 
 import numpy as np
+from numpy import percentile
+
+
 import sklearn.mixture
 from scipy.optimize import curve_fit
 
@@ -35,6 +38,24 @@ def load_uptimes(file):
                 None #  Literally do nothing
 
     return uptimes
+
+def get_5_point_summary(data):
+    data = np.array(data)
+
+    # calculate quartiles
+    quartiles = percentile(data, [25, 50, 75]) # to so centyle
+    # calculate min/max
+    data_min, data_max = data.min(), data.max()
+    # print 5-number summary
+    print('Min: %.3f' % data_min)
+    print('Q1: %.3f' % quartiles[0])
+    print('Median: %.3f' % quartiles[1])
+    print('Q3: %.3f' % quartiles[2])
+    print('Max: %.3f' % data_max)
+
+    return data_min, quartiles[0], quartiles[1], quartiles[2], data_max
+
+
             
 def generate_histogram(uptimes):
     #histogram = plt.hist(uptimes, 100)
@@ -63,6 +84,13 @@ def generate_histogram(uptimes):
     
     ax.bar(bin_centres, hist, label='Fitted data')
     
+
+    summary_5_point = get_5_point_summary(uptimes)
+    colors_5 = ['#ebf442', '#53f441', '#41f4e8', '#f141f4', '#f44146']
+
+    for xc, color in zip(summary_5_point, colors_5):
+        ax.axvline(x=xc, color=color)
+
     #plt.hist(uptimes, )
     
     # Finally, lets get the fitting parameters, i.e. the mean and standard deviation:
@@ -97,5 +125,7 @@ filename = 'results/HISTOGRAM.txt'
 #save_uptimes(data , filename)
 uptimes = load_uptimes(filename)
 
+
+print('===============')
 generate_histogram(uptimes)
 
