@@ -34,6 +34,9 @@ def plot_elevators(elevators, global_downtime):
 
     for e in elevators:
         y+=1
+
+        plt.text(-70, y, f'Elevator {y}', fontsize=15)
+
         for data in e.journal:
             plt.fill_between(data, y1=y-0.2, y2=y+0.2, color=parameters.COLORS[y])
 
@@ -42,10 +45,17 @@ def plot_elevators(elevators, global_downtime):
 
     plt.fill_between([0, parameters.LIFETIME_OF_ELEVATOR], y1=y-0.2, y2=y+0.2, color='white')
 
+
+    plt.text(-70, y, f'Downtime', fontsize=15)
+
     for data in global_downtime_journal:
         plt.fill_between(data, y1=y-0.2, y2=y+0.2, color='red')
 
-    plt.axes().get_yaxis().set_visible(False)
+    #plt.axes().get_yaxis().set_visible(False)
+    plt.axes().get_yaxis().set_ticks([])
+
+    plt.xlabel('Time [days]')
+    plt.ylabel('Uptime of a given elevator')
     plt.show()
 
 
@@ -157,3 +167,26 @@ def make_table_plot():
     plt.title('Loss by Disaster')
 
     plt.show()
+
+
+
+if __name__ == '__main__':
+
+    fig = plt.figure()
+    x = np.arange(10)
+    y = 2.5 * np.sin(x / 20 * np.pi)
+    yerr = np.linspace(0.05, 0.2, 10)
+
+    plt.errorbar(x, y + 3, yerr=yerr, label='both limits (default)')
+
+    plt.errorbar(x, y + 2, yerr=yerr, uplims=True, label='uplims=True')
+
+    plt.errorbar(x, y + 1, yerr=yerr, uplims=True, lolims=True,
+                label='uplims=True, lolims=True')
+
+    upperlimits = [True, False] * 5
+    lowerlimits = [False, True] * 5
+    plt.errorbar(x, y, yerr=yerr, uplims=upperlimits, lolims=lowerlimits,
+                label='subsets of uplims and lolims')
+
+    plt.legend(loc='lower right')

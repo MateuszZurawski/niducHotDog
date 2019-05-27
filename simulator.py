@@ -3,6 +3,8 @@ import random
 from numpy.random import normal, weibull
 
 import numpy as np
+from numpy import percentile
+
 
 import math
 import matplotlib.pyplot as plt
@@ -39,18 +41,32 @@ class Simulator:
 
         uptime = sum(global_downtime)/parameters.LIFETIME_OF_ELEVATOR*100
 
+        #plots.plot_elevators(elevators, global_downtime)
+
+
         return uptime
 
-    def average_uptime(self, number_of_runs):
+    def average_uptime_stats(self, number_of_runs):
         uptimes = self.uptimes_for_histogram(number_of_runs)
+        minimum, q1, median, q3, maximum = get_5_point_summary(uptimes)
 
-        return sum(uptimes)/len(uptimes)
+        return sum(uptimes)/len(uptimes), q1, q3
 
     def uptimes_for_histogram(self, number_of_runs):
         uptimes = [self.run() for _ in range(number_of_runs)]
-
         return uptimes
-    #plots.plot_elevators(elevators, global_downtime)
+
+
+def get_5_point_summary(data):
+    data = np.array(data)
+
+    # calculate quartiles
+    quartiles = percentile(data, [25, 50, 75]) # to so centyle
+    # calculate min/max
+    data_min, data_max = data.min(), data.max()
+    # print 5-number summary
+    
+    return data_min, quartiles[0], quartiles[1], quartiles[2], data_max
 
 
 if __name__ == '__main__':

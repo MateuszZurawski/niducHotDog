@@ -1,6 +1,6 @@
 HOW_MANY_ELEVATORS = 2
 
-LIFETIME_OF_ELEVATOR = 365*10
+LIFETIME_OF_ELEVATOR = 365
 
 
 # TODO: find params for 90% avialability rate

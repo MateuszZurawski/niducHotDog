@@ -83,7 +83,8 @@ def generate_histogram(uptimes):
     ax.plot(bin_centres, hist_fit, label='Fitted data', color='red')
     
     ax.bar(bin_centres, hist, label='Fitted data')
-    
+    plt.xlabel('Niezawodność [%]')
+    plt.ylabel('Ilość wyników przypadających na dany przedział')
 
     summary_5_point = get_5_point_summary(uptimes)
     colors_5 = ['#ebf442', '#53f441', '#41f4e8', '#f141f4', '#f44146']
@@ -98,11 +99,20 @@ def generate_histogram(uptimes):
     print ('Fitted standard deviation = ', coeff[2])
 
 
-    ax.text(0.95, 0.95, f'Standard Deviation: {coeff[2]:.3f}\nMean: {coeff[1]:.3f}',
+    plot_text = f'''Standard Deviation: {coeff[2]:.3f}
+    Mean: {coeff[1]:.3f}
+    
+    Min: {summary_5_point[0]:.3f}
+    First quantile: {summary_5_point[1]:.3f}
+    Median: {summary_5_point[2]:.3f}
+    Third quantile: {summary_5_point[3]:.3f}
+    Max: {summary_5_point[4]:.3f}
+    '''
+    ax.text(0.85, 0.95, plot_text,
             verticalalignment='top', horizontalalignment='right',
             transform=ax.transAxes,
             color='black', fontsize=10,
-            bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
+            bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10}, clip_on=False)
     #ax.xlabel('% niezawodności')
 
     #ax.text(0.1, 0.1, 'boxed italics text in data coords', style='italic',

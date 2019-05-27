@@ -30,7 +30,9 @@ print('# Simulating...')
 for value in tqdm( arange(from_value, to_value, step)):
     setattr(parameters, parameter_to_change, value)
 
-    line_to_write = f'{value}, {simulator.average_uptime(100)}\n'
+    uptime, q1, q3 = simulator.average_uptime_stats(100)
+
+    line_to_write = f'{value}, {uptime}, {q1}, {q3}\n'
     output_file.write( line_to_write )
     #print(getattr(parameters, args.parameter))
     #simulation.run()   
